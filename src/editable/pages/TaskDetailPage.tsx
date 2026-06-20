@@ -136,34 +136,28 @@ function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post:
   const images = getImages(post)
   const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
   return (
-    <section className="bg-[#f7f4ef]">
-      <header className="border-b border-black/20">
-        <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+    <section className="bg-[#fefddf]">
+      <header className="border-b border-black">
+        <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-8 lg:px-12 lg:py-12">
           <BackLink task={task} />
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-4 border-black pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
-            <span className="text-[#c92f2f]">{categoryOf(post, 'News')}</span>
-            {published ? <time>{published}</time> : null}
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-center">
+            {images[0] ? <figure className="overflow-hidden border border-black bg-[#d8e7f0]"><img src={images[0]} alt="" className="aspect-[16/10] h-full w-full object-cover" /></figure> : <div className="hidden aspect-[16/10] border border-black bg-[#73a5ca] lg:block" />}
+            <div>
+              <div className="flex flex-wrap items-center gap-3 text-[11px] font-black uppercase tracking-[0.16em]"><span className="text-[#e87f24]">{categoryOf(post, 'News')}</span>{published ? <><span className="text-black/35">•</span><time className="text-black/60">{published}</time></> : null}</div>
+              <h1 className="editorial-serif mt-5 max-w-4xl text-5xl font-black leading-[.98] tracking-[-.045em] sm:text-6xl lg:text-7xl">{post.title}</h1>
+              {summaryText(post) ? <p className="mt-6 max-w-3xl text-lg leading-8 text-black/68 sm:text-xl">{summaryText(post)}</p> : null}
+            </div>
           </div>
-          <h1 className="editorial-serif mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.5rem]">{post.title}</h1>
-          {summaryText(post) ? <p className="mt-6 max-w-4xl text-xl font-bold leading-8 text-black/68 sm:text-2xl">{summaryText(post)}</p> : null}
         </div>
       </header>
 
-      {images[0] ? (
-        <figure className="mx-auto max-w-[1320px] border-x border-b border-black/15 bg-white">
-          <img src={images[0]} alt="" className="max-h-[760px] w-full object-cover" />
-          <figcaption className="border-t border-black/15 px-4 py-3 text-xs italic text-black/55 sm:px-6">Featured image for {post.title}</figcaption>
-        </figure>
-      ) : null}
-
-      <div className="mx-auto grid max-w-[1180px] gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_300px] lg:px-8 lg:py-16">
+      <div className="mx-auto grid max-w-[1200px] gap-12 px-4 py-12 sm:px-8 lg:grid-cols-[210px_minmax(0,760px)] lg:px-8 lg:py-16">
+        <aside className="hidden border-t-4 border-[#e87f24] pt-5 lg:block"><p className="text-xs font-black uppercase tracking-[.15em]">In this update</p><p className="mt-4 text-sm leading-6 text-black/60">Context, details, and related stories from the media desk.</p></aside>
         <article className="min-w-0 border-t-4 border-black pt-8">
           <BodyContent post={post} />
           <EditableComments slug={post.slug} comments={comments} />
+          <div className="mt-14 border-t-4 border-[#e87f24] pt-5"><RelatedPanel task={task} post={post} related={related} /></div>
         </article>
-        <div className="border-t-4 border-[#c92f2f] pt-5">
-          <RelatedPanel task={task} post={post} related={related} />
-        </div>
       </div>
     </section>
   )
