@@ -134,7 +134,6 @@ function BackLink({ task }: { task: TaskKey }) {
 
 function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post: SitePost; related: SitePost[]; comments: Array<{ id: string; name: string; comment: string; createdAt: string }> }) {
   const images = getImages(post)
-  const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
   return (
     <section className="bg-[#fefddf]">
       <header className="border-b border-black">
@@ -143,7 +142,7 @@ function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post:
           <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-center">
             {images[0] ? <figure className="overflow-hidden border border-black bg-[#d8e7f0]"><img src={images[0]} alt="" className="aspect-[16/10] h-full w-full object-cover" /></figure> : <div className="hidden aspect-[16/10] border border-black bg-[#73a5ca] lg:block" />}
             <div>
-              <div className="flex flex-wrap items-center gap-3 text-[11px] font-black uppercase tracking-[0.16em]"><span className="text-[#e87f24]">{categoryOf(post, 'News')}</span>{published ? <><span className="text-black/35">•</span><time className="text-black/60">{published}</time></> : null}</div>
+              <div className="flex flex-wrap items-center gap-3 text-[11px] font-black uppercase tracking-[0.16em]"><span className="text-[#e87f24]">{categoryOf(post, 'News')}</span></div>
               <h1 className="editorial-serif mt-5 max-w-4xl text-5xl font-black leading-[.98] tracking-[-.045em] sm:text-6xl lg:text-7xl">{post.title}</h1>
               {summaryText(post) ? <p className="mt-6 max-w-3xl text-lg leading-8 text-black/68 sm:text-xl">{summaryText(post)}</p> : null}
             </div>
@@ -399,7 +398,6 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
           <div className="mt-4 grid gap-3 text-sm font-bold opacity-75">
             <p className="inline-flex items-center gap-2"><Tag className="h-4 w-4" /> Task: {taskConfig?.label || task}</p>
             <p className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Site: {SITE_CONFIG.name}</p>
-            {post.publishedAt ? <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p> : null}
           </div>
         </div>
       ) : null}
